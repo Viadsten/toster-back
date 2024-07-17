@@ -7,6 +7,14 @@ export class User extends BaseModel {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Column({ nullable: true })
+    name: string
+
     @Column()
     email: string
+
+    @Column({ nullable: true })
+    password: string
+
+
 }
