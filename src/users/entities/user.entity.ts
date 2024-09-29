@@ -16,5 +16,7 @@ export class User extends BaseModel {
     @Column({ nullable: true })
     password: string
 
+    @Column({ default: false })
+    isAccess: boolean
 
 }

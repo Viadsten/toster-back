@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,6 +23,15 @@ export class UsersService {
 
   async findOneByEmail(email: string) {
     return await this.userRepository.findOneBy({email})
+  }
+
+  async updateUser(entity: UpdateUserDto) {
+
+    if(!entity?.id) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
+
+    return await this.userRepository.update(entity.id , entity)
   }
 
 }

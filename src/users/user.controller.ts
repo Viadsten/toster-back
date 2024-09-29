@@ -6,7 +6,7 @@ import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 
 @Controller('currentUser')
-@ApiTags("currentUser")
+@ApiTags("User")
 @ApiBearerAuth()
 export class UserController {
 
