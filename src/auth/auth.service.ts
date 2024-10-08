@@ -4,6 +4,7 @@ import { Response } from 'express';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -14,9 +15,13 @@ export class AuthService {
 
     async validateUser(email: string , password: string): Promise<Omit<User , "password">> {
         
-        const user = await this.usersService.findOneByEmail(email)
+        const user = await this.usersService.findOneByEmail(email);
 
-        if(user && (await user).password === password) {
+        const passwordDB = user.password;
+
+        const isMatch = await bcrypt.compare(password, passwordDB);
+
+        if(user && isMatch) {
             
             const {password , ...result} = user;
 
@@ -47,7 +52,7 @@ export class AuthService {
     }
 
     async login(user: User , response: Response) {
-        
+
         const jwtToken = this.jwtService.sign({id: user.id})
 
         response.cookie('token', jwtToken, {httpOnly: true})

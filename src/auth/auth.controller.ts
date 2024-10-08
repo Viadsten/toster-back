@@ -14,8 +14,8 @@ export class AuthController {
 
     @UseGuards(LocalAuthGuard)
     @HttpCode(HttpStatus.OK)
-    @Post('login')
     @ApiBody({type: CreateUserDto})
+    @Post('login')
     async login(
         @Request() req,
         @Res({ passthrough: true }) response: Response

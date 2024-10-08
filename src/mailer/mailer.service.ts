@@ -36,11 +36,15 @@ export class MailerService {
         }
 
         try {
-            const result = await transport.sendMail(options)
+        
+            const result = await transport.sendMail(options);
 
-            return result
+            return result;
+        
         } catch(e) {
-            console.log(e)
+        
+            console.log('Mailer Error' , e);
+
         }
 
     }
