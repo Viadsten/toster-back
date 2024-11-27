@@ -43,7 +43,7 @@ export class AuthService {
             response.cookie('token', jwtToken, {httpOnly: true})
 
             return {
-                token: this.jwtService.sign({id: userData.id})
+                token: jwtToken
             }
 
         } catch(err) {
@@ -58,7 +58,7 @@ export class AuthService {
         response.cookie('token', jwtToken, {httpOnly: true})
 
         return {
-            token: this.jwtService.sign({id: user.id})
+            token: jwtToken
         }
     }
 

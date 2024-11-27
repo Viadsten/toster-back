@@ -14,7 +14,7 @@ export class UsersService {
     private userRepository: Repository<User>,
   ){}
 
-  async create(createUserDto: CreateUserDto) {
+  public async create(createUserDto: CreateUserDto) {
 
     const salt = await bcrypt.genSalt();
 
@@ -26,15 +26,15 @@ export class UsersService {
 
   }
 
-  async findById(id: number) {
+  public async findById(id: number) {
     return await this.userRepository.findOneBy({id});
   }
 
-  async findOneByEmail(email: string) {
+  public async findOneByEmail(email: string) {
     return await this.userRepository.findOneBy({email})
   }
 
-  async updateUser(entity: UpdateUserDto) {
+  public async updateUser(entity: UpdateUserDto) {
 
     if(!entity?.id) {
       throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);

@@ -15,6 +15,6 @@ export class UserController {
     @Get("")
     @UseGuards(JwtAuthGuard)
     getCurrentUser(@UserId() id: number) {
-        return this.usersService.findById(id)
+        return this.usersService.findById(id);
     }
 }

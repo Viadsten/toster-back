@@ -16,7 +16,7 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @ApiBody({type: CreateUserDto})
     @Post('login')
-    async login(
+    login(
         @Request() req,
         @Res({ passthrough: true }) response: Response
     ) {
@@ -29,6 +29,13 @@ export class AuthController {
         @Res({ passthrough: true }) response: Response
     ) {
         return this.authService.register(dto , response)
+    }
+
+    @Post("logout")
+    logout(
+        @Res({ passthrough: true }) response: Response
+    ){
+        response.clearCookie('token')
     }
 
 }

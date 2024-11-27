@@ -6,21 +6,6 @@ import Mail from 'nodemailer/lib/mailer';
 @Injectable()
 export class MailerService {
 
-
-    private mailTransport() {
-        const transporter = nodemailer.createTransport({
-            host: "smtp.yandex.ru",
-            port: 465,
-            secure: true,
-            auth: {
-              user: "tosterovichtoster", 
-              pass: "mlritzebjdjnrsbg" 
-            }
-          });
-
-        return transporter
-    }
-
     public async sendEmail(dto: any) {
 
         const transport = this.mailTransport()
@@ -47,6 +32,20 @@ export class MailerService {
 
         }
 
+    }
+
+    private mailTransport() {
+        const transporter = nodemailer.createTransport({
+            host: "smtp.yandex.ru",
+            port: 465,
+            secure: true,
+            auth: {
+              user: "tosterovichtoster", 
+              pass: "mlritzebjdjnrsbg" 
+            }
+          });
+
+        return transporter
     }
 
 }

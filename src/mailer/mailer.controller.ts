@@ -17,7 +17,7 @@ export class MailerController {
     private readonly mailerService: MailerService,
     private readonly usersService: UsersService) 
   {
-      this.codeCache = new NodeCache({ stdTTL: 300 });
+      this.codeCache = new NodeCache({ stdTTL: 600 });
   }
 
 
@@ -27,7 +27,7 @@ export class MailerController {
 
     let code = '';
 
-    for(let i = 0; i < 4; i++) {
+    for(let i = 0; i < 6; i++) {
       code += Math.round(Math.random() * 10).toString()
     }
 
