@@ -1,5 +1,6 @@
 import { BaseModel } from "src/models/BaseModel";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { TestEntry } from "src/test-entries/entities/test-entry.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User extends BaseModel {
@@ -18,5 +19,8 @@ export class User extends BaseModel {
 
     @Column({ default: false })
     isAccess: boolean
+
+    @OneToMany(() => TestEntry, (test) => test.author)
+    tests: TestEntry[]
 
 }

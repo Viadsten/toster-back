@@ -1,21 +1,27 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
+import { MailerService } from 'src/mailer/mailer.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         private usersService: UsersService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private mailerService: MailerService
     ){}
 
     async validateUser(email: string , password: string): Promise<Omit<User , "password">> {
         
         const user = await this.usersService.findOneByEmail(email);
+
+        if(!user) {
+            throw new HttpException("Неверный логин или пароль" , HttpStatus.NOT_FOUND);
+        }
 
         const passwordDB = user.password;
 
@@ -33,10 +39,10 @@ export class AuthService {
 
     }
 
-    async register(dto: CreateUserDto , response: Response) {
+    async register(user: CreateUserDto , response: Response) {
         try {
 
-            const userData = await this.usersService.create(dto)
+            const userData = await this.usersService.create(user)
 
             const jwtToken = this.jwtService.sign({id: userData.id})
 
@@ -58,7 +64,8 @@ export class AuthService {
         response.cookie('token', jwtToken, {httpOnly: true})
 
         return {
-            token: jwtToken
+            token: jwtToken,
+            user
         }
     }
 

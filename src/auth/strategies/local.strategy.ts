@@ -2,7 +2,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-local";
 import { AuthService } from "../auth.service";
 import { User } from "src/users/entities/user.entity";
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -18,7 +18,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         const user = await this.authService.validateUser(email , password)
 
         if(!user) {
-            throw new UnauthorizedException("Неверный логин или пароль")
+            throw new HttpException("Неверный логин или пароль" , HttpStatus.NOT_FOUND)
         }
 
         return user

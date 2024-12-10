@@ -8,6 +8,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { MailerModule } from 'src/mailer/mailer.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       }
     }),
     UsersModule, 
-    PassportModule
+    PassportModule,
+    MailerModule
   ],
   providers: [AuthService , LocalStrategy , JwtStrategy],
   controllers: [AuthController]

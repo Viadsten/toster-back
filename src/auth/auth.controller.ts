@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { User } from 'src/users/entities/user.entity';
 import { LocalAuthGuard } from './guards/local.guard';
 import { Response } from 'express';
+import { MailerService } from 'src/mailer/mailer.service';
 
 @Controller('auth')
 @ApiTags("Auth")
@@ -20,7 +21,7 @@ export class AuthController {
         @Request() req,
         @Res({ passthrough: true }) response: Response
     ) {
-        return this.authService.login(req.user as User , response);
+        return this.authService.login(req.user , response);
     }
 
     @Post("register")
@@ -36,6 +37,7 @@ export class AuthController {
         @Res({ passthrough: true }) response: Response
     ){
         response.clearCookie('token')
+        return true;
     }
 
 }

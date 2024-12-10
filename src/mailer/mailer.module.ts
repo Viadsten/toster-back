@@ -7,5 +7,6 @@ import { UsersModule } from 'src/users/users.module';
   imports: [UsersModule],
   controllers: [MailerController],
   providers: [MailerService],
+  exports: [MailerService]
 })
 export class MailerModule {}
