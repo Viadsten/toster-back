@@ -16,8 +16,7 @@ export class UsersService {
 
   public async create(createUserDto: CreateUserDto) {
 
-    const userDB = this.userRepository.findOneBy({email: createUserDto.email})
-
+    const userDB = await this.userRepository.findOneBy({email: createUserDto.email})
     if(userDB) {
       throw new HttpException('Пользователь с такой почтой есть! Иди нахуй', HttpStatus.CONFLICT)
     }
@@ -26,7 +25,7 @@ export class UsersService {
 
     const hashPassword = await bcrypt.hash(createUserDto.password, salt);
 
-    const createUser = {...createUserDto , password: hashPassword}
+    const createUser = {...createUserDto , password: 'hashPassword'}
 
     return await this.userRepository.save(createUser);
 
