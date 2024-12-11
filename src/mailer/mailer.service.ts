@@ -25,7 +25,7 @@ export class MailerService {
 
     public async sendEmail(sendMailerDto: SendMailerDto): Promise<boolean> {
 
-        const isCurrentUserAccess = (await this.usersService.findOneByEmail(sendMailerDto.email)).isAccess
+        const isCurrentUserAccess = (await this.usersService.findOneByEmail(sendMailerDto.email))?.isAccess
 
         if(isCurrentUserAccess) {
             throw new HttpException('Пользователь верефицирован!', HttpStatus.FOUND);
